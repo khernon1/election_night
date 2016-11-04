@@ -7,13 +7,18 @@ class CandidatesController < ApplicationController
       config.access_token        = "81697530-ifI24FyEatCOaESTZYvW1MidVuTPeKpUIjPCi3Mtp"
       config.access_token_secret = "HwfkWXWIHSpa2UEaH4u1qRue67VNdu3EE1dAJeCIlbXhB"      
     end
-    count = 0
+    clinton = 0
+    trump = 0
     topics = ["trump", "clinton"]
       client.filter(track: topics.join(",")) do |tweet|
-        byebug
-        # Candidate.create(name: tweet.text)
-        count += 1 if tweet.is_a?(Twitter::Tweet)
-        puts count 
+        if tweet.text.downcase.include?("clinton")
+          clinton += 1
+          puts "Clinton: #{clinton}"
+        elsif tweet.text.downcase.include?("trump")
+          trump += 1
+          puts "Trump: #{trump}"
+        # count += 1 if tweet.is_a?(Twitter::Tweet)
+        end        
       end
   end
 
